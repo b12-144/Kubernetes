@@ -9,7 +9,7 @@ A few useful Kubernetes scripts.
 
 ## PostgreSQL
 
-* [PostgreSQL](./Postgresql.yaml) Kubernetes setup.
+* [PostgreSQL](./PostgreSQL.yaml) Kubernetes setup.
 * Execute the command to apply: `kubectl apply -f \.PostgreSQL.yaml`
 * Execute the command to delete: `kubectl delete -f .\PostgreSQL.yaml`
 

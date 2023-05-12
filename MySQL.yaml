@@ -1,0 +1,75 @@
+# NAMESPACE
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: mysql
+---
+# PERSISTENT VOLUME
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: mysql
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+#      containers:
+#        - name: proxy
+#          image: gcr.io/google_containers/kubectl-amd64:v1.5.2
+#          command:
+#            - proxy
+      containers:
+        - name: mysql
+          image: mysql:8.0.21
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: BolaDeNeve78
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+---
+# Service
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: mysql
+spec:
+  type: LoadBalancer
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3310
+      targetPort: 3306
+      name: mysql-admin-port

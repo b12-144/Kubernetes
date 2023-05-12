@@ -13,5 +13,11 @@ A few useful Kubernetes scripts.
 * Execute the command to apply: `kubectl apply -f \.PostgreSQL.yaml`
 * Execute the command to delete: `kubectl delete -f .\PostgreSQL.yaml`
 
+## MySQL
+
+* [MySQL](./MySQL.yaml) Kubernetes setup.
+* Execute the command to apply: `kubectl apply -f .\MySQL.yaml`
+* Execute the command to delete: `kubectl delete -f .\MySQL.yaml`
+
 Enjoy! :heart:
 
